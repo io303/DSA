@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Main3 {
+public class Main2 {
     static class ListNode {
         int val;
         ListNode next;
