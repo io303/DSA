@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 
 
-public class Solution1 {
+public class deletedup1 {
 
     // Function to remove duplicates from sorted list
     public ListNode deleteDuplicates(ListNode head) {
@@ -30,7 +30,7 @@ public class Solution1 {
     // Main function to run in VS Code
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Solution1 sol = new Solution1();
+        deletedup1 sol = new deletedup1();
 
         System.out.print("Enter number of nodes: ");
         int n = sc.nextInt();
