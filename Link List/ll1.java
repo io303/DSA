@@ -61,7 +61,23 @@ public int deletel(){
         temp.next=null;
         return value;
 }
+public int delete(int index){
+    if(index==0){
+        return deletef();
+    }
+    Node temp=head;
+  
+    for(int i=1;temp!=null&&i<index;i++){
 
+        temp=temp.next;
+    }
+   if(temp==null||temp.next==null){
+    return -1;
+   }
+int va=temp.next.val;
+temp.next=temp.next.next;
+return va;
+}
 
 
 
@@ -78,7 +94,7 @@ public int deletel(){
 
 }
 
-class Main{
+class lMain{
       public static void main(String[] args) {
         ll1 l=new ll1();
         l.insert(4);
@@ -89,9 +105,12 @@ class Main{
         l.insertParticular(8, 1);
         l.print();
     //    System.out.println( l.deletef());
-    System.out.println(l.deletel());
+    // System.out.println(l.deletel());
+    l.delete(1);
        l.print();
-
+        // l.insert(1);
+        l.insertParticular(0, 1);
+        l.print();
 
     }
 }
