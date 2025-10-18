@@ -1,35 +1,84 @@
-import java.util.Queue;
-
-import javax.swing.tree.TreeNode;
+import java.util.*;
 
 public class Levelorder1 {
-    public List<List<Integer>> levelorder(TreeNode root){
-        List<List<Integer>> res=new ArrayList<>();
-        if(root=null){
-            return res;
-        }
-        Queue<E> <TreeNode> queue=new linkedList<>();
-        queue.offer(root);
-        while(!queue.isEmpty()){
-        int n=queue.size();
-        List<Integer> curr=new Arraylist<>();
-        for(int i=0;i<n;i++){
-            TreeNode current =queue.poll();
-            curr.add(current.val);
-            if(current.left!=null){
-                queue.offer(current.left);
 
+    // Build tree from level order array (-1 means null)
+    public static TreeNode buildTreeFromArray(int[] arr) {
+        if (arr.length == 0 || arr[0] == -1) return null;
+
+        TreeNode root = new TreeNode(arr[0]);
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+
+        int i = 1;
+        while (i < arr.length) {
+            TreeNode current = queue.poll();
+            if (current == null) continue;
+
+            // Left child
+            if (i < arr.length && arr[i] != -1) {
+                current.left = new TreeNode(arr[i]);
+                queue.add(current.left);
             }
-            if(current.right!=null){
-                queue.offer(current.right);
+            i++;
+
+            // Right child
+            if (i < arr.length && arr[i] != -1) {
+                current.right = new TreeNode(arr[i]);
+                queue.add(current.right);
             }
+            i++;
         }
-        result.add(current);
-        }
-        return res;
+        return root;
     }
 
+    // Level order traversal
+    public static List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) return result;
 
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
 
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> level = new ArrayList<>();
 
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                level.add(node.val);
+
+                if (node.left != null) queue.add(node.left);
+                if (node.right != null) queue.add(node.right);
+            }
+
+            result.add(level);
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter elements in level order (-1 for null):");
+        String[] input = sc.nextLine().split(" ");
+        int[] arr = new int[input.length];
+        for (int i = 0; i < input.length; i++) {
+            arr[i] = Integer.parseInt(input[i]);
+        }
+
+        TreeNode root = buildTreeFromArray(arr);
+        List<List<Integer>> levels = levelOrder(root);
+
+        System.out.println("Level Order Traversal: " + levels);
+    }
+}
+
+class TreeNode {
+    int val;
+    TreeNode left, right;
+
+    TreeNode(int val) {
+        this.val = val;
+    }
 }
