@@ -1,10 +1,12 @@
-import java.util.*;
-public class LevelorderAverage2 {
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Scanner;
 
-    // Build binary tree from level order array (-1 means null)
-     static TreeNode buildTreeFromArray(int[] arr) {
-        if (arr.length == 0 || arr[0] == -1)
-            return null;
+public class LevelOrderRev5 {
+        static TreeNode buildTreeFromArray(int[] arr) {
+        if (arr.length == 0 || arr[0] == -1) return null;
 
         TreeNode root = new TreeNode(arr[0]);
         Queue<TreeNode> queue = new LinkedList<>();
@@ -32,37 +34,38 @@ public class LevelorderAverage2 {
         return root;
     }
 
-    // Function to calculate average of each level
-    public static List<Double> averageOfLevels(TreeNode root) {
-        List<Double> averages = new ArrayList<>();
-        if (root == null) return averages;
+    // Level order traversal
+     static List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) return result;
 
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
 
         while (!queue.isEmpty()) {
             int size = queue.size();
-            double sum = 0;
+            List<Integer> level = new ArrayList<>();
 
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
-                sum += node.val;
+                level.add(node.val);
 
                 if (node.left != null) queue.add(node.left);
                 if (node.right != null) queue.add(node.right);
             }
 
-            averages.add(sum / size);
+            result.add(0,level);
         }
-
-        return averages;
+        return result;
     }
 
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Enter number of elements: ");
         int n = sc.nextInt();
+       
 
         int[] arr = new int[n];
         System.out.println("Enter elements in level order (-1 for null): ");
@@ -71,7 +74,8 @@ public class LevelorderAverage2 {
         }
 
         TreeNode root = buildTreeFromArray(arr);
-        List<Double> averages = averageOfLevels(root);
+        int key =sc.nextInt();
+            List<List<Integer>> averages =  levelOrder(root);
 
         System.out.println("Average of each level: " + averages);
     }
