@@ -74,7 +74,7 @@ public class LevelOrderRev5 {
         }
 
         TreeNode root = buildTreeFromArray(arr);
-        int key =sc.nextInt();
+        // int key =sc.nextInt();
             List<List<Integer>> averages =  levelOrder(root);
 
         System.out.println("Average of each level: " + averages);
