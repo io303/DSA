@@ -17,10 +17,18 @@ public class Infix {
     // apply operator to two numbers
     static int applyOp(int a, int b, char op) {
         switch (op) {
-            case '+': return a + b;
-            case '-': return a - b;
-            case '*': return a * b;
-            case '/': return a / b;
+            case '+' -> {
+                return a + b;
+            }
+            case '-' -> {
+                return a - b;
+            }
+            case '*' -> {
+                return a * b;
+            }
+            case '/' -> {
+                return a / b;
+            }
         }
         return 0;
     }
