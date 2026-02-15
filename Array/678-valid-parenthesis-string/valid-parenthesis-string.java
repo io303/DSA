@@ -1,28 +1,27 @@
 class Solution {
-   Boolean dp[][];
+    public boolean checkValidString(String s) {
 
-public boolean checkValidString(String s) {
-    dp = new Boolean[s.length()][s.length()];
-    return help(s.toCharArray(), 0, 0);
-}
+        int low = 0, high = 0;
 
-boolean help(char[] s, int i, int c) {
-    if (c < 0) return false;
-    if (i == s.length) return c == 0;
-    if (dp[i][c] != null) return dp[i][c];
+        for(char c : s.toCharArray()){
 
-    boolean ans;
+            if(c == '('){
+                low++;
+                high++;
+            }
+            else if(c == ')'){
+                low--;
+                high--;
+            }
+            else{ 
+                low--;     
+                high++;    
+            }
 
-    if (s[i] == '(')
-        ans = help(s, i + 1, c + 1);
-    else if (s[i] == ')')
-        ans = help(s, i + 1, c - 1);
-    else
-        ans = help(s, i + 1, c + 1) ||
-              help(s, i + 1, c - 1) ||
-              help(s, i + 1, c);
+            if(high < 0) return false;
+            if(low < 0) low = 0;
+        }
 
-    return dp[i][c] = ans;
-}
-
+        return low == 0;
+    }
 }
