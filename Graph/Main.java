@@ -48,6 +48,7 @@ public class Main {
         // Sort outer list (optional – like GFG driver does)
         // result.sort((a, b) -> a.get(0) - b.get(0));
 
+
         System.out.println(result);
 
         sc.close();
