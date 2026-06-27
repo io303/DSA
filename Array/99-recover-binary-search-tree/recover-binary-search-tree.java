@@ -1,40 +1,37 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
 class Solution {
-    TreeNode prev;
-    TreeNode first;
-    TreeNode second;
+
+    List<Integer> inorderList = new ArrayList<>();
+    int index = 0;
 
     public void recoverTree(TreeNode root) {
-        helper(root);
-        int temp=first.val;
-        first.val=second.val;
-        second.val=temp;
 
+        // Step 1: Store inorder
+        inorder(root);
+
+        // Step 2: Sort
+        Collections.sort(inorderList);
+
+        // Step 3: Put sorted values back
+        restore(root);
     }
-    void helper(TreeNode node){
-        if(node==null) return;
-        helper(node.left);
-        if(prev!=null&&prev.val>node.val){
-            if(first==null){
-                first=prev;
-            }
-            second=node;
-        }
-        prev=node;
-        helper(node.right);
+
+    private void inorder(TreeNode root) {
+
+        if (root == null)
+            return;
+
+        inorder(root.left);
+        inorderList.add(root.val);
+        inorder(root.right);
+    }
+
+    private void restore(TreeNode root) {
+
+        if (root == null)
+            return;
+
+        restore(root.left);
+        root.val = inorderList.get(index++);
+        restore(root.right);
     }
 }
