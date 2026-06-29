@@ -1,36 +1,59 @@
+import java.util.Arrays;
+
 class Solution {
 
+    int[][] dp;
+
     public String longestPalindrome(String s) {
-        if (s == null || s.length() < 2)
-            return s;
 
-        int start = 0, end = 0;
+        int n = s.length();
 
-        for (int i = 0; i < s.length(); i++) {
+        dp = new int[n][n];
 
-            int len1 = expand(s, i, i);       // odd length
-            int len2 = expand(s, i, i + 1);   // even length
+        for (int[] row : dp)
+            Arrays.fill(row, -1);
 
-            int len = Math.max(len1, len2);
+        int start = 0;
+        int maxLen = 1;
 
-            if (len > end - start) {
-                start = i - (len - 1) / 2;
-                end = i + len / 2;
+        for (int i = 0; i < n; i++) {
+
+            for (int j = i; j < n; j++) {
+
+                if (isPalindrome(s, i, j)) {
+
+                    if (j - i + 1 > maxLen) {
+
+                        maxLen = j - i + 1;
+                        start = i;
+                    }
+                }
             }
         }
 
-        return s.substring(start, end + 1);
+        return s.substring(start, start + maxLen);
     }
 
-    private int expand(String s, int left, int right) {
+    private boolean isPalindrome(String s, int i, int j) {
 
-        while (left >= 0 && right < s.length()
-                && s.charAt(left) == s.charAt(right)) {
+        if (i >= j)
+            return true;
 
-            left--;
-            right++;
+        if (dp[i][j] != -1)
+            return dp[i][j] == 1;
+
+        if (s.charAt(i) != s.charAt(j)) {
+
+            dp[i][j] = 0;
+            return false;
         }
 
-        return right - left - 1;
+        boolean ans = isPalindrome(s, i + 1, j - 1);
+
+        dp[i][j] = ans ? 1 : 0;
+
+        return ans;
     }
+
+   
 }
