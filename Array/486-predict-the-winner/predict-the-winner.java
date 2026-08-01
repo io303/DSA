@@ -8,6 +8,7 @@ class Solution {
         if(i==j){
             return nums[i];
         }
+        if(dp[i][j]!=null)return dp[i][j];
         int left=nums[i]-help(nums,dp,i+1,j);
         int right=nums[j]-help(nums,dp,i,j-1);
         return dp[i][j]=Math.max(left,right);
