@@ -1,48 +1,38 @@
 class Solution {
-    Integer[][][] dp;
-
+    Integer dp[][][];
+     int c1=0,c2=0;
     public int findMaxForm(String[] strs, int m, int n) {
-        int len = strs.length;
-
-        dp = new Integer[len][m + 1][n + 1];
-
-        return help(strs, len - 1, m, n);
+        dp=new Integer[strs.length+1][m+1][n+1];
+            return help(strs.length-1,m,n,strs);
     }
-
-    int help(String[] strs, int i, int m, int n) {
-
-        // Base case
-        if (i < 0) {
-            return 0;
-        }
-
-        // Already calculated
-        if (dp[i][m][n] != null) {
-            return dp[i][m][n];
-        }
-
-        // Count 0s and 1s
-        int zeros = 0;
-        int ones = 0;
-
-        for (char ch : strs[i].toCharArray()) {
-            if (ch == '0') {
-                zeros++;
-            } else {
-                ones++;
+    int help(int  i,int m,int n,String s[]){
+        if(i==0){
+            if(valid(s[0],m,n)){
+                return 1;
+            }else{
+                return 0;
             }
         }
-
-        // Option 1: Don't take current string
-        int skip = help(strs, i - 1, m, n);
-
-        // Option 2: Take current string
-        int pick = 0;
-
-        if (zeros <= m && ones <= n) {
-            pick = 1 + help(strs, i - 1, m - zeros, n - ones);
+        if(dp[i][m][n]!=null)return dp[i][m][n];
+        int skip=help(i-1,m,n,s);
+        int pick=0;
+        if(valid(s[i],m,n)){
+            pick=1+help(i-1,m-c1,n-c2,s);
         }
+        return dp[i][m][n]=Math.max(skip,pick);
+    }
+    boolean valid(String s,int  m,int n){
+        int co=0,cz=0;
+        for(char ch:s.toCharArray()){
+            if(ch=='0'){
+                cz++;
+            }else{
+                co++;
+            }
+        }
+        c1=cz;
+        c2=co;
 
-        return dp[i][m][n] = Math.max(skip, pick);
+        return cz<=m&&co<=n;
     }
 }
