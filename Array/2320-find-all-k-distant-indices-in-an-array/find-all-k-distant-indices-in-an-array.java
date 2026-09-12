@@ -1,16 +1,24 @@
 class Solution {
     public List<Integer> findKDistantIndices(int[] nums, int key, int k) {
-        
+
         List<Integer> ans = new ArrayList<>();
 
-        for (int i = 0; i < nums.length; i++) {
+        int n = nums.length;
+        int prev = -1;
 
-            for (int j = 0; j < nums.length; j++) {
+        for (int j = 0; j < n; j++) {
 
-                if (nums[j] == key && Math.abs(i - j) <= k) {
+            if (nums[j] == key) {
+
+                int left = Math.max(0, j - k);
+                int right = Math.min(n - 1, j + k);
+
+                // Only add indices not already added
+                for (int i = Math.max(left, prev + 1); i <= right; i++) {
                     ans.add(i);
-                    break;
                 }
+
+                prev = Math.max(prev, right);
             }
         }
 
